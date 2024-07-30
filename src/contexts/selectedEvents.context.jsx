@@ -1,4 +1,7 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
+
+//utils
+import { getItemFromLocalStorage, setItemToLocalStorage } from '../utils/localStorage.utlis';
 
 export const SelectedEventsContext = createContext({
     selectedEvents: [],
@@ -8,8 +11,17 @@ export const SelectedEventsContext = createContext({
 });
 
 export const SelectedEventsProvider = ({ children }) => {
-    const [selectedEvents, setSelectedEvents] = useState([]);
-    const [isEventClashing, setIsEventClashing] = useState(false);
+    const [selectedEvents, setSelectedEvents] = useState(() =>
+        getItemFromLocalStorage('selectedEvents', [])
+    );
+    const [isEventClashing, setIsEventClashing] = useState(
+        getItemFromLocalStorage('isEventClashing', false)
+    );
+
+    useEffect(() => {
+        setItemToLocalStorage('selectedEvents', selectedEvents);
+        setItemToLocalStorage('isEventClashing', isEventClashing);
+    }, [selectedEvents, isEventClashing]);
 
     const values = { selectedEvents, setSelectedEvents, isEventClashing, setIsEventClashing };
     return (

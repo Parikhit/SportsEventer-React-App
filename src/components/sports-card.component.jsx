@@ -5,7 +5,8 @@ import { EventContext } from '../contexts/events.context';
 import { SelectedEventsContext } from '../contexts/selectedEvents.context';
 
 //utility functions for converting time from string and checking time conflicts
-import { convertTime, timeConflicts } from '../utils/utilityFunctions.utils';
+import { convertTime } from '../utils/convertTime.utils';
+import { timeConflicts } from '../utils/checkTimeConflicts.utils';
 
 const SportCard = ({ event, buttonType }) => {
     //pulling values and methods from context

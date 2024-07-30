@@ -1,5 +1,10 @@
 import { createContext, useState, useEffect } from 'react';
 
+//utils
+import { getItemFromLocalStorage, setItemToLocalStorage } from '../utils/localStorage.utlis';
+
+const URL = 'https://66a773d453c13f22a3cfccab.mockapi.io/api/v1/events';
+
 const STATUS = {
     LOADING: 'LOADING',
     SUCCESS: 'SUCCESS',
@@ -14,14 +19,12 @@ export const EventContext = createContext({
 });
 
 export const EventProvider = ({ children }) => {
-    const [allEvents, setAllEvents] = useState([]);
-    const [status, setStatus] = useState(STATUS.LOADING);
+    const [allEvents, setAllEvents] = useState(() => getItemFromLocalStorage('allEvents', []));
+    const [status, setStatus] = useState(() => getItemFromLocalStorage('status', STATUS.LOADING));
 
-    const getEventData = async () => {
+    const getEventData = async (URL) => {
         try {
-            const response = await fetch(
-                'https://66a773d453c13f22a3cfccab.mockapi.io/api/v1/events'
-            );
+            const response = await fetch(URL);
 
             if (!response.ok) {
                 setStatus(STATUS.ERROR);
@@ -37,8 +40,13 @@ export const EventProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        getEventData();
+        getEventData(URL);
     }, []);
+
+    useEffect(() => {
+        setItemToLocalStorage('allEvents', allEvents);
+        setItemToLocalStorage('status', status);
+    }, [allEvents, status]);
 
     const values = { allEvents, setAllEvents, status, setStatus };
 
