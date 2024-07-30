@@ -29,10 +29,20 @@ export const EventProvider = ({ children }) => {
             if (!response.ok) {
                 setStatus(STATUS.ERROR);
             } else {
-                const data = await response.json();
+                const newEvents = await response.json();
+
+                // Check for duplicates
+                const existingEventIds = new Set(allEvents.map((event) => event.id));
+
+                const uniqueNewEvents = newEvents.filter(
+                    (event) => !existingEventIds.has(event.id)
+                );
 
                 setStatus(STATUS.SUCCESS);
-                setAllEvents(data);
+
+                if (uniqueNewEvents.length > 0) {
+                    setAllEvents((prevEvents) => [...prevEvents, ...uniqueNewEvents]);
+                }
             }
         } catch (error) {
             setStatus(STATUS.ERROR);
