@@ -14,14 +14,11 @@ export const SelectedEventsProvider = ({ children }) => {
     const [selectedEvents, setSelectedEvents] = useState(() =>
         getItemFromLocalStorage('selectedEvents', [])
     );
-    const [isEventClashing, setIsEventClashing] = useState(
-        getItemFromLocalStorage('isEventClashing', false)
-    );
+    const [isEventClashing, setIsEventClashing] = useState(false);
 
     useEffect(() => {
         setItemToLocalStorage('selectedEvents', selectedEvents);
-        setItemToLocalStorage('isEventClashing', isEventClashing);
-    }, [selectedEvents, isEventClashing]);
+    }, [selectedEvents]);
 
     const values = { selectedEvents, setSelectedEvents, isEventClashing, setIsEventClashing };
     return (

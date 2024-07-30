@@ -40,7 +40,9 @@ export const EventProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        getEventData(URL);
+        if (!allEvents.length) {
+            getEventData(URL);
+        }
     }, []);
 
     useEffect(() => {
