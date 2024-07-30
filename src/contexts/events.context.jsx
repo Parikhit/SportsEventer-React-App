@@ -22,7 +22,7 @@ export const EventProvider = ({ children }) => {
     const [allEvents, setAllEvents] = useState(() => getItemFromLocalStorage('allEvents', []));
     const [status, setStatus] = useState(() => getItemFromLocalStorage('status', STATUS.LOADING));
 
-    const getEventData = async (URL) => {
+    const getEventData = async () => {
         try {
             const response = await fetch(URL);
 
@@ -41,7 +41,12 @@ export const EventProvider = ({ children }) => {
                 setStatus(STATUS.SUCCESS);
 
                 if (uniqueNewEvents.length > 0) {
-                    setAllEvents((prevEvents) => [...prevEvents, ...uniqueNewEvents]);
+                    setAllEvents((prevEvents) => {
+                        const updatedEvents = [...prevEvents, ...uniqueNewEvents];
+
+                        setItemToLocalStorage('allEvents', updatedEvents);
+                        return updatedEvents;
+                    });
                 }
             }
         } catch (error) {
@@ -51,7 +56,7 @@ export const EventProvider = ({ children }) => {
 
     useEffect(() => {
         if (!allEvents.length) {
-            getEventData(URL);
+            getEventData();
         }
     }, []);
 
