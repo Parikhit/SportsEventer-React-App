@@ -20,8 +20,6 @@ const SelectedEventCards = ({
             )}
 
             <div className='max-w-7xl min-w-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 border border-red-200 p-4'>
-                {selectedEvents.length > 3 && <div>You can only select a maximum of 3 events</div>}
-
                 {selectedEvents.map((event) => {
                     return (
                         <div

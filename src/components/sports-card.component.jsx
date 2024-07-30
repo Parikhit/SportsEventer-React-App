@@ -1,6 +1,13 @@
 import { convertTime, timeConflicts } from '../utils/utilityFunctions.utils';
 
-const SportCard = ({ event, setSelectedEvents, setAllEvents, selectedEvents, buttonType }) => {
+const SportCard = ({
+    event,
+    setSelectedEvents,
+    setAllEvents,
+    selectedEvents,
+    buttonType,
+    setIsEventClashing,
+}) => {
     const {
         event_name: eventName,
         event_category: eventCategory,
@@ -11,16 +18,13 @@ const SportCard = ({ event, setSelectedEvents, setAllEvents, selectedEvents, but
     const handleEventClick = (event) => {
         const id = event.id;
 
-        if (
-            buttonType === 'SELECT' &&
-            selectedEvents.length < 3
-            // && timeConflicts(event, selectedEvents)
-        ) {
-            setSelectedEvents((prevEvents) => [...prevEvents, event]);
-            setAllEvents((sports) => sports.filter((sport) => sport.id !== id));
-        } else {
-            setSelectedEvents((prevEvents) => [...prevEvents]);
-            setAllEvents((sports) => [...sports]);
+        if (buttonType === 'SELECT' && selectedEvents.length < 3) {
+            if (!timeConflicts(event, selectedEvents)) {
+                setSelectedEvents((prevEvents) => [...prevEvents, event]);
+                setAllEvents((sports) => sports.filter((sport) => sport.id !== id));
+            } else {
+                setIsEventClashing(true);
+            }
         }
 
         if (buttonType == 'UNSELECT') {

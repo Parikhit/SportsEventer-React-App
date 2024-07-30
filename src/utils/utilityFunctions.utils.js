@@ -15,8 +15,8 @@ export const convertTime = (timeStr) => {
 };
 
 export const timeConflicts = (eventToCheck, events) => {
-    const eventToCheckStartTime = new Date(eventToCheck.startTime);
-    const eventToCheckEndTime = new Date(eventToCheck.endTime);
+    const eventToCheckStartTime = new Date(eventToCheck.start_time);
+    const eventToCheckEndTime = new Date(eventToCheck.end_time);
 
     for (const event of events) {
         const eventStartTime = new Date(event.start_time);
