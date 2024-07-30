@@ -1,3 +1,5 @@
+//convert time from the given string to 12-Hr format
+
 export const convertTime = (timeStr) => {
     let hours = new Date(timeStr).getHours();
     const minutes = new Date(timeStr).getMinutes();
@@ -14,6 +16,7 @@ export const convertTime = (timeStr) => {
     return `${finalHours}:${finalMinutes} ${period}`;
 };
 
+//check for time conflicts
 export const timeConflicts = (eventToCheck, events) => {
     const eventToCheckStartTime = new Date(eventToCheck.start_time);
     const eventToCheckEndTime = new Date(eventToCheck.end_time);

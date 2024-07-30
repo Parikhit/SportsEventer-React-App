@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+    //Storing differnt nav links in an array for making it scalable for futute add-on's
     const links = [
         { id: 1, path: '/', name: 'All Events' },
         { id: 2, path: '/selected-events', name: 'Selected Events' },
