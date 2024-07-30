@@ -14,7 +14,7 @@ const App = () => {
                 to='/'
                 className='text-3xl hover:text-amber-200'
             >
-                Sports Eventer React App
+                SportsEventer React App
             </Link>
 
             <Navbar />
