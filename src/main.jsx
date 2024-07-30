@@ -11,12 +11,12 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <BrowserRouter>
-            <EventProvider>
-                <SelectedEventsProvider>
+        <EventProvider>
+            <SelectedEventsProvider>
+                <BrowserRouter>
                     <App />
-                </SelectedEventsProvider>
-            </EventProvider>
-        </BrowserRouter>
+                </BrowserRouter>
+            </SelectedEventsProvider>
+        </EventProvider>
     </React.StrictMode>
 );
