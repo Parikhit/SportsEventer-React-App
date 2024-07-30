@@ -1,7 +1,9 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 
 //utils
 import { getItemFromLocalStorage, setItemToLocalStorage } from '../utils/localStorage.utlis';
+
+import { SelectedEventsContext } from './selectedEvents.context';
 
 const URL = 'https://66a773d453c13f22a3cfccab.mockapi.io/api/v1/events';
 
@@ -22,6 +24,8 @@ export const EventProvider = ({ children }) => {
     const [allEvents, setAllEvents] = useState(() => getItemFromLocalStorage('allEvents', []));
     const [status, setStatus] = useState(() => getItemFromLocalStorage('status', STATUS.LOADING));
 
+    const { selectedEvents } = useContext(SelectedEventsContext);
+
     const getEventData = async () => {
         try {
             const response = await fetch(URL);
@@ -29,24 +33,14 @@ export const EventProvider = ({ children }) => {
             if (!response.ok) {
                 setStatus(STATUS.ERROR);
             } else {
-                const newEvents = await response.json();
-
-                // Check for duplicates
-                const existingEventIds = new Set(allEvents.map((event) => event.id));
-
-                const uniqueNewEvents = newEvents.filter(
-                    (event) => !existingEventIds.has(event.id)
-                );
-
+                const data = await response.json();
                 setStatus(STATUS.SUCCESS);
 
-                if (uniqueNewEvents.length > 0) {
-                    setAllEvents((prevEvents) => {
-                        const updatedEvents = [...prevEvents, ...uniqueNewEvents];
+                //Exclude selected events in the Fetch if selected events exists
+                if (selectedEvents.length !== 0) {
+                    const uniqueData = data.filter((event) => event.id !== selectedEvents.id);
 
-                        setItemToLocalStorage('allEvents', updatedEvents);
-                        return updatedEvents;
-                    });
+                    setAllEvents(uniqueData);
                 }
             }
         } catch (error) {
