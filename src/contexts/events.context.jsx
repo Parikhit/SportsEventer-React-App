@@ -37,11 +37,7 @@ export const EventProvider = ({ children }) => {
                 setStatus(STATUS.SUCCESS);
 
                 //Exclude selected events in the Fetch if selected events exists
-                if (selectedEvents.length !== 0) {
-                    const uniqueData = data.filter((event) => event.id !== selectedEvents.id);
-
-                    setAllEvents(uniqueData);
-                }
+                if (selectedEvents.length === 0) setAllEvents(data);
             }
         } catch (error) {
             setStatus(STATUS.ERROR);
@@ -49,6 +45,7 @@ export const EventProvider = ({ children }) => {
     };
 
     useEffect(() => {
+        //Fetching only if localstorage have no events
         if (!allEvents.length) {
             getEventData();
         }
