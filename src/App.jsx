@@ -4,6 +4,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Navbar from './components/navbar.component';
 import SportsCards from './components/sports-cards.component';
 import SelectedEventCards from './components/selected-event-cards.component';
+import Footer from './components/footer.component';
 
 import './App.css';
 
@@ -30,6 +31,8 @@ const App = () => {
                     element={<SelectedEventCards />}
                 />
             </Routes>
+
+            <Footer />
         </>
     );
 };

@@ -11,7 +11,7 @@ const SelectedEventCards = () => {
     //pulling values and methods from context
     const { selectedEvents } = useContext(SelectedEventsContext);
 
-    //Handlinng edge case if fetch fails
+    //Handling edge case if fetch fails
     if (selectedEvents.length === 0 || !selectedEvents)
         return (
             <div className='w-full h-48 flex items-center justify-center text-2xl font-semibold'>
